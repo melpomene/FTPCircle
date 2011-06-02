@@ -5,6 +5,7 @@
 #Import all the moudles that should be in the README file.
 import Main
 import sys
+import Database
 
 #TODO: Write to file (only delete the last part of the file)
 #TODO: Better markup
@@ -25,6 +26,12 @@ class CommentGenerate:
 			info = getattr(Main, name).__doc__
 			if info != None:
 				array.append("###" +name + " \n" + info + "\n")
+		
+		for name in dir(Database):
+			info = getattr(Database, name).__doc__
+			if info != None:
+				array.append("###" +name + " \n" + info + "\n")
+			
 		return array
 		
 
@@ -57,5 +64,3 @@ class CommentGenerate:
 		except IOError:
 			print("Could not write to README.md")
 		file.close()
-
-			
