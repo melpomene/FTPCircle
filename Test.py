@@ -12,7 +12,7 @@ class TestSequence(unittest.TestCase):
 	
 	def setUp(self):
 		""" Things that will need to be run before the tests"""
-		self._server_list = ServerList()
+		self._server_list = ServerList("serverlist.csv")
 		self._server_list_matrix = self._server_list.make_matrix()
 
 	def test_connect(self):
@@ -38,7 +38,7 @@ class TestSequence(unittest.TestCase):
 		#d.initDB() #This is already done and the file is in the repo 
 		
 	def test_Main(self):
-		main = Main()
+		main = Main("serverlist.csv")
 		#main.list()
 
 if __name__ == '__main__':

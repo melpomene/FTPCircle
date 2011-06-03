@@ -16,8 +16,8 @@ class Main():
 	takes care of UI input.
 	To clearify: UI CALLS THIS CLASS WHICH WRAPPS THE WHOLE PROGRAM AND HELPS OTHER CLASSES TO INTERFACE WITH EACH OTHER (yay, caps.)"""
 	
-	def __init__(self):
-		self.serverlist = ServerList().make_matrix()
+	def __init__(self, server_list):
+		self.serverlist = ServerList(server_list).make_matrix()
 		self.connector = FTPConnector(self.serverlist) 
 		self.database = Database.Database()
 		self.connector.connect()
@@ -167,9 +167,16 @@ class ConnectionInfo():
 
 class ServerList():
 	"""Interface to serverlist.csv """
+	def __init__(self, server_list):
+		self._server_list = server_list
 	def make_matrix(self):
 		"""Parse serverlist.csv and generates a matrix representing the information """
-		server_list = open("serverlist.csv", "r")
+		try:
+			server_list = open("serverlist.csv", "r")
+		except IOError:
+			print "File not found:", self._server_list
+			sys.exit()
+
 		server_list_lines = sum(1 for line in server_list.readlines())
 		server_list_matrix = [ [ 0 for i in range(4) ] for j in range(server_list_lines) ]
 		server_list.seek(0)
